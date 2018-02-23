@@ -1,3 +1,8 @@
+dotnet sln add "Senai.Ifood.Domain/Senai.Ifood.Domain.csproj";dotnet sln add "Senai.Ifood.Repository/Senai.Ifood.Repository.csproj";dotnet sln add "Senai.Ifood.WebApi/Senai.Ifood.WebApi.csproj"
+
+
+-------------------------------------------------------
+
 C:\Users\38141419897\backend\new\senai.ifood.solution\senai.ifood.domain>dotnet add package System.ComponentModel.Annotations --version 4.4.1
 
 
@@ -7,3 +12,19 @@ dotnet add package Microsoft.EntityFrameworkCore --version 2.0.1
 dotnet add package Microsoft.EntityFrameworkCore.SqlServer --version 2.0.1 
 
 dotnet add package Microsoft.EntityFrameworkCore.Relational --version 2.0.1 
+
+criar arquivo de migração
+
+dotnet ef migrations add Estrutura_Inicial
+
+--------------------------------------------------------
+
+atualizar banco
+
+dotnet ef database update --startup-project ../senai.ifood.webapi/senai.ifood.webapi.csproj
+
+
+-------------------------------------------------------
+
+
+USER=corujasdevbr; curl "https://api.github.com/users/$USER/repos?per_page=1000" | grep -w clone_url | grep -o '[^"]\+://.\+.git' | xargs -L1 git clone
