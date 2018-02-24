@@ -8,7 +8,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using senai.ifood.domain.Contracts;
 using senai.ifood.repository.Context;
+using senai.ifood.repository.Repositories;
 
 namespace senai.ifood.webapi
 {
@@ -25,6 +27,10 @@ namespace senai.ifood.webapi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<IFoodContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddMvc().AddJsonOptions(options => {options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;});
+
+            services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -35,10 +41,13 @@ namespace senai.ifood.webapi
                 app.UseDeveloperExceptionPage();
             }
 
-            app.Run(async (context) =>
+            app.UseMvc();
+
+            /*app.Run(async (context) =>
             {
                 await context.Response.WriteAsync("Hello World!");
             });
+            */
         }
     }
 }
